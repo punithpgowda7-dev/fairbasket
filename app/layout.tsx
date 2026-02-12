@@ -3,19 +3,19 @@ import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { ThemeProvider } from './context/ThemeContext';
 import AuthModal from './components/AuthModal';
-import type { Metadata, Viewport } from 'next';
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'FairBasket | Honest Pricing',
   description: 'The transparent pricing marketplace.',
 };
 
-// FIX: This forces mobile to fit screen perfectly (No Zooming)
-export const viewport: Viewport = {
+// FORCE VIEWPORT: This stops the mobile browser from zooming in/out
+export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({
@@ -24,8 +24,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className="antialiased bg-gray-50 text-black dark:bg-[#050505] dark:text-white transition-colors duration-300">
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className="antialiased bg-gray-50 text-black dark:bg-[#050505] dark:text-white transition-colors duration-300 overflow-x-hidden w-full">
         <ThemeProvider>
           <AuthProvider>
             <CartProvider>

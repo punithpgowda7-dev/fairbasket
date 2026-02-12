@@ -11,29 +11,36 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | null>(null);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark'); // Default to dark
+  const [theme, setTheme] = useState<Theme>('dark');
 
-  // Load theme from local storage
   useEffect(() => {
-    const savedTheme = localStorage.getItem('transtore_theme') as Theme;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
-    } else {
+    // Check local storage or system preference
+    const savedTheme = localStorage.getItem('fairbasket_theme') as Theme;
+    const initialTheme = savedTheme || 'dark';
+    setTheme(initialTheme);
+    
+    // Apply to HTML tag immediately
+    if (initialTheme === 'dark') {
       document.documentElement.classList.add('dark');
+      document.documentElement.style.colorScheme = 'dark';
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.style.colorScheme = 'light';
     }
   }, []);
 
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
-    localStorage.setItem('transtore_theme', newTheme);
+    localStorage.setItem('fairbasket_theme', newTheme);
     
-    // Toggle the 'dark' class on the HTML element
+    // FORCED TOGGLE: This manually forces the DOM to update
     if (newTheme === 'dark') {
       document.documentElement.classList.add('dark');
+      document.documentElement.style.colorScheme = 'dark';
     } else {
       document.documentElement.classList.remove('dark');
+      document.documentElement.style.colorScheme = 'light';
     }
   };
 
