@@ -3,14 +3,16 @@ import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { ThemeProvider } from './context/ThemeContext';
 import AuthModal from './components/AuthModal';
+import type { Metadata, Viewport } from 'next';
 
-export const metadata = {
+// 1. Metadata for SEO and Tab Titles
+export const metadata: Metadata = {
   title: 'FairBasket | Honest Pricing',
-  description: 'The transparent pricing marketplace.',
+  description: 'The transparent pricing marketplace with no hidden fees.',
 };
 
-// FORCE VIEWPORT: This stops the mobile browser from zooming in/out
-export const viewport = {
+// 2. THE FIX: Strict Viewport Rule to prevent mobile zooming
+export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -25,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className="antialiased bg-gray-50 text-black dark:bg-[#050505] dark:text-white transition-colors duration-300 overflow-x-hidden w-full">
+      <body className="antialiased bg-gray-50 text-black dark:bg-[#050505] dark:text-white transition-colors duration-300 w-full overflow-x-hidden">
         <ThemeProvider>
           <AuthProvider>
             <CartProvider>
