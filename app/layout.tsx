@@ -1,17 +1,18 @@
 import './globals.css';
+import Navbar from './components/Navbar'; // <--- Importing your fixed Navbar
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import { ThemeProvider } from './context/ThemeContext';
 import AuthModal from './components/AuthModal';
 import type { Metadata, Viewport } from 'next';
 
-// 1. Metadata for SEO and Tab Titles
+// 1. Metadata for SEO
 export const metadata: Metadata = {
   title: 'FairBasket | Honest Pricing',
   description: 'The transparent pricing marketplace with no hidden fees.',
 };
 
-// 2. THE FIX: Strict Viewport Rule to prevent mobile zooming
+// 2. Viewport settings (Mobile zoom fix)
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -31,8 +32,18 @@ export default function RootLayout({
         <ThemeProvider>
           <AuthProvider>
             <CartProvider>
+              
+              {/* 1. The Global Navbar (Includes SearchBar) */}
+              <Navbar />
+              
+              {/* 2. Login/Signup Modal */}
               <AuthModal />
-              {children}
+              
+              {/* 3. Main Page Content */}
+              <main className="min-h-screen">
+                {children}
+              </main>
+
             </CartProvider>
           </AuthProvider>
         </ThemeProvider>
